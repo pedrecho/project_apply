@@ -3,9 +3,9 @@ import math
 
 def matrix_input_1():
     print('Введите матрицу:')
-    m = [list(map(lambda x: int(x), input().split(' ')))]
+    m = [list(map(lambda x: float(x), input().split(' ')))]
     for i in range(len(m[0]) - 1):
-        a = list(map(lambda x: int(x), input().split(' ')))
+        a = list(map(lambda x: float(x), input().split(' ')))
         if len(a) != len(m[0]):
             return None
         m.append(a)
@@ -14,9 +14,9 @@ def matrix_input_1():
 
 def matrix_input_2():
     print('Введите матрицу:')
-    m = [list(map(lambda x: int(x), input().split(' ')))]
+    m = [list(map(lambda x: float(x), input().split(' ')))]
     for i in range(len(m[0]) - 2):
-        a = list(map(lambda x: int(x), input().split(' ')))
+        a = list(map(lambda x: float(x), input().split(' ')))
         if len(a) != len(m[0]):
             return None
         m.append(a)
@@ -70,10 +70,6 @@ def vector_angle(a, b):
     return math.acos(round(c / (vector_module(a) * vector_module(b)), 6))
 
 
-def inverse_matrix(m):
-    d = determinant(m)
-
-
 def kramer(m):
     d = [determinant(list(map(lambda x: x[:-1], m)))]
     for i in range(len(m)):
@@ -91,14 +87,26 @@ def square(a, b):
     return round(u, 4), round(u * 2, 4)
 
 
+def znak(m):
+    d = determinant(m)
+    if d > 0:
+        for i in range(1, len(m)):
+            if determinant(list(map(lambda x: x[:i + 1], m[:i + 1]))) < 0:
+                return 'Форма знакопеременна'
+            return 'Положительно определена'
+    else:
+        for i in range(1, len(m)):
+            if determinant(list(map(lambda x: x[:i + 1], m[:i + 1]))) * (-1) ** (i + 1) < 0:
+                return 'Форма знакопеременна'
+            return 'Отрицательно определена'
 
 
 while True:
-    fun = ["1. Обратная матрица", "2. Решение системы линейных уравнений методом Крамера", "3. Угол между векторами", "4. Площадь плоской фигуры, построенной на векторах"]
+    fun = ["1. Определение знакоопределенности квадратичной формы по критерию Сильвестра", "2. Решение системы линейных уравнений методом Крамера", "3. Угол между векторами", "4. Площадь плоской фигуры, построенной на векторах"]
     print('\n'.join(fun))
     a = int(input("Введите номер функции:"))
     if a == 1:
-        print(inverse_matrix(matrix_input_1()))
+        print(znak(matrix_input_1()))
     if a == 2:
         print(*kramer(matrix_input_2()))
     if a == 3:
