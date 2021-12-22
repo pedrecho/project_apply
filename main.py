@@ -24,7 +24,7 @@ def matrix_input_2():
 
 
 def vector_input():
-    return list(map(lambda x: int(x), input().split(' ')))
+    return list(map(lambda x: float(x), input().split(' ')))
 
 
 def vectors_input():
@@ -43,8 +43,8 @@ def determinant(m):
         return None
     if l == 1:
         return m[0][0]
-    if l == 2:
-        return m[0][0] * m[1][1] - m[0][1] * m[1][0]
+    # if l == 2:
+    #     return m[0][0] * m[1][1] - m[0][1] * m[1][0]
     res = 0
     for i in range(l):
         d = []
@@ -84,7 +84,7 @@ def kramer(m):
 
 def square(a, b):
     u = math.sin(vector_angle(a, b)) * vector_module(a) * vector_module(b)
-    return round(u, 4), round(u * 2, 4)
+    return round(u / 2, 4), round(u, 4)
 
 
 def znak(m):
